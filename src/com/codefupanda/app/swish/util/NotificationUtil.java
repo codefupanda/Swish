@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -13,12 +15,14 @@ import com.codefupanda.app.swish.R;
 public class NotificationUtil {
 
 	private static final int NOTIFICATION_ID = 1000;
-
+	private static Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+	 
 	public static void showNotification(final Context context) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context).setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(context.getText(R.string.app_name))
-				.setContentText(context.getText(R.string.app_name));
+				.setContentTitle(context.getText(R.string.notification_title))
+				.setContentText(context.getText(R.string.notification_text))
+				.setSound(soundUri);
 		
 		// Creates an explicit intent for an Activity in your app
 		Intent resultIntent = new Intent(context, MainActivity.class);

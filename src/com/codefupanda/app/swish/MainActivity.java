@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -25,11 +26,22 @@ public class MainActivity extends ActionBarActivity implements
 	private List<Contact> contacts;
 	private ListView mylistview;
 	private CustomAdapter adapter;
-
+	private SharedPreferences prefs;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		prefs = getSharedPreferences("com.codefupanda.app.swish", MODE_PRIVATE);
+		
+		if (prefs.getBoolean("firstrun", true)) {
+			// Show a flash screen welcoming to Swish
+			// Ask for default birthday message
+			// and set the reminder time
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+		
 		setContentView(R.layout.activity_main);
+		
 		AlarmUtil.setOnetimeTimer(this);
 		
 		contacts = getContacts();
@@ -40,9 +52,9 @@ public class MainActivity extends ActionBarActivity implements
 		mylistview.setAdapter(adapter);
 
 		mylistview.setOnItemClickListener(this);
-
-	} // oncreate end
-
+		
+	} 
+	
 	private List<Contact> getContacts() {
 		List<Contact> contacts = new ArrayList<Contact>();
 		contacts.add(new Contact("Shashank", R.drawable.blank_profile_pic,
@@ -71,8 +83,7 @@ public class MainActivity extends ActionBarActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_search:
-	            return true;
+	    // open settings activity
 	        case R.id.action_settings:
 	            return true;
 	        default:
