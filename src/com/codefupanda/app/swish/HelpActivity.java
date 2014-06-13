@@ -14,32 +14,23 @@
  * limitations under the License.
  *
  */
-package com.codefupanda.app.swish.alarmmanager;
+package com.codefupanda.app.swish;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-import com.codefupanda.app.swish.dao.BirthdayContactDao;
-import com.codefupanda.app.swish.util.NotificationUtil;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 /**
- * Show notifications. 
+ * The help activity. 
  *  
  * @author Shashank
  */
-public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
+public class HelpActivity extends ActionBarActivity {
 	
-	/**
-	 * If contacts have birthday display the notification.
-	 */
 	@Override
-	public void onReceive(Context context, Intent intent) {
-		BirthdayContactDao dao = new BirthdayContactDao(context);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_help);
 		
-		if(dao.getTodaysBirthdayContacts().size() != 0) {
-			NotificationUtil.showNotification(context);			
-		}
+		getSupportActionBar().setHomeButtonEnabled(true);
 	}
-	
 }

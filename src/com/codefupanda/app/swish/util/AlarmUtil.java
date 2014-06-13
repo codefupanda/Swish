@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) Shashank Kulkarni - Shashank.physics AT gmail DOT com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package com.codefupanda.app.swish.util;
 
 import java.util.Calendar;
@@ -9,10 +25,15 @@ import android.content.Intent;
 
 import com.codefupanda.app.swish.alarmmanager.AlarmManagerBroadcastReceiver;
 
+/**
+ * A Util for setting alarms.
+ * 
+ * @author Shashank
+ */
 public class AlarmUtil {
 	
 	final public static String ONE_TIME = "onetime";
-	private static final long INTERVAL =  10 * 1000; // Everyday 24 * 60 * 60 * 1000
+	private static final long INTERVAL =  24 * 60 * 60 * 1000; // Everyday
 	
 	/**
 	 * Set alarm 
@@ -33,11 +54,16 @@ public class AlarmUtil {
 		calendar.add(Calendar.HOUR, hour);
 		calendar.add(Calendar.MINUTE, min);
 		
-		// After after 5 seconds
-		am.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),
-				INTERVAL, pi);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, 
+					Calendar.getInstance().getTimeInMillis(),
+					INTERVAL, pi);
 	}
 
+	/**
+	 * cancel alarm.
+	 * 
+	 * @param context
+	 */
 	public static void CancelAlarm(Context context) {
 		Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
 		PendingIntent sender = PendingIntent
@@ -47,6 +73,11 @@ public class AlarmUtil {
 		alarmManager.cancel(sender);
 	}
 
+	/**
+	 * One time alarm.
+	 * 
+	 * @param context
+	 */
 	public static void setOnetimeTimer(Context context) {
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);

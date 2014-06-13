@@ -2,13 +2,41 @@
 <resources>
 
     <string name="app_name">Swish - SMS Wish</string>
+    <string name="swish">Swish</string>
+    
     <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+    
     <string name="profile_pic">Profile Pic</string>
     <string name="notification_title">Friends have Birthday today!</string>
     <string name="notification_text">Let\'s Swish</string>
     
+    <string name="birth_message">"Enter Message : "</string>
+    <string name="message">Enter Message</string>
+    <string name="pick_a_time">Pick a time</string>
+    <string name="update">Update</string>
+    <string name="welcome">Welcome to Swish!</string>
+    <string name="gotoHelp">Check Menu -> Help for help.</string>
+    
+    <string name="helpText">
+     Swish relies on the contact information saved in the phone to notify you the Birthdays.\n
+     \n
+     To get Birthday notification please update the contact information with birth dates.\n
+     \n
+     Follow the below steps :\n 
+     \n
+     \t 1) Go to People/Contacts app,\n
+	 \t 2) Open the contact whose birth date you want to add\n 
+	 \t 3) Select Menu -> Edit\n
+	 \t 4) Click Add another field -> Special Dates (Birthday)\n
+	 \t 5) Done!\n
+	\n
+	For any queries reach out to code.fu.pandas@gmail.com\n
+    </string>
+
     <!-- Pictures -->
     <array name="profile_pics">
         <item>@drawable/blank_profile_pic</item>
     </array>
+
 </resources>

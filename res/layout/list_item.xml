@@ -8,9 +8,9 @@
         android:id="@+id/profile_pic"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:contentDescription="@string/profile_pic"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:contentDescription="@string/profile_pic"
         android:src="@drawable/blank_profile_pic" />
 
     <TextView
@@ -37,6 +37,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/name"
         android:layout_marginRight="44dp"
+        android:checked="true"
         android:focusable="false" />
 
 </RelativeLayout>

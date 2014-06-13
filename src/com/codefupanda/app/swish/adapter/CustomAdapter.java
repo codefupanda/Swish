@@ -1,13 +1,26 @@
-/**
- * 
+/*
+ * Copyright (C) Shashank Kulkarni - Shashank.physics AT gmail DOT com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package com.codefupanda.app.swish.adapter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,26 +33,44 @@ import android.widget.TextView;
 import com.codefupanda.app.swish.R;
 import com.codefupanda.app.swish.entity.Contact;
 
+/**
+ * Adapter to populate list of contacts. 
+ *  
+ * @author Shashank
+ */
 public class CustomAdapter extends BaseAdapter {
 
 	private Context context;
+	
+	/** List of contacts */
 	private List<Contact> contacts;
 
-	private boolean[] itemChecked;
+	/** Records unchecked items */
+	private boolean[] itemsUnChecked;
 
-	static int selectcount = 0;
-
+	/**
+	 * Constructor.
+	 * 
+	 * @param context
+	 * @param contacts
+	 */
 	public CustomAdapter(Context context, List<Contact> contacts) {
 		this.context = context;
 		this.contacts = contacts;
-		itemChecked = new boolean[contacts.size()];
+		itemsUnChecked = new boolean[contacts.size()];
 	}
 
+	/**
+	 * Get total contacts.
+	 */
 	@Override
 	public int getCount() {
 		return contacts.size();
 	}
 
+	/**
+	 * Get contact at position.
+	 */
 	@Override
 	public Object getItem(int position) {
 		return contacts.get(position);
@@ -50,14 +81,17 @@ public class CustomAdapter extends BaseAdapter {
 		return contacts.indexOf(getItem(position));
 	}
 
-	/* private view holder class */
+	/** private view holder class */
 	private class ViewHolder {
 		ImageView profilePic;
 		TextView name;
-		TextView dateOfBirth;
+		TextView phoneNumber;
 		CheckBox checkBox;
 	}
 
+	/**
+	 * Populate the view.
+	 */
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -70,37 +104,31 @@ public class CustomAdapter extends BaseAdapter {
 
 			// add or setting data's to listItem row
 			Contact contact = contacts.get(position);
-
+			
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.profilePic = (ImageView) convertView
 					.findViewById(R.id.profile_pic);
-			holder.dateOfBirth = (TextView) convertView
+			holder.phoneNumber = (TextView) convertView
 					.findViewById(R.id.date_of_birth);
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.chk);
-
-			holder.profilePic.setImageResource(contact.getProfilePic());
-			holder.name.setText(contact.getName());
-			holder.dateOfBirth.setText(DateUtils.formatDateTime(context,
-					contact.getDateOfBirth().getTime(),
-					DateUtils.FORMAT_SHOW_DATE));
-			holder.checkBox.setChecked(false);
-
-			if (itemChecked[position]) {
-				holder.checkBox.setChecked(true);
-			} else {
-				holder.checkBox.setChecked(false);
+			holder.profilePic.setImageResource(R.drawable.blank_profile_pic);
+			
+			// In case contact have picture assigned to it
+			if(contact.getProfilePicUri() != null) {
+				holder.profilePic.setImageURI(contact.getProfilePicUri());
 			}
 			
+			holder.name.setText(contact.getName());
+			holder.phoneNumber.setText(getPhoneNumber(contact));
+
 			holder.checkBox.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					if (holder.checkBox.isChecked()) {
-						itemChecked[position] = true;
-						selectcount++;
+						itemsUnChecked[position] = false;
 					} else {
-						itemChecked[position] = false;
-						selectcount--;
+						itemsUnChecked[position] = true;
 					}
 				}
 			});
@@ -112,12 +140,41 @@ public class CustomAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * Get count of items selected
-	 * 
-	 * @return count of items selected
+	 * A helper method to get contact numbers.
+	 *  
+	 * @param contact contact
+	 * @return phone numbers separated by comma
 	 */
-	public static int getItemSelectCount() {
-		return selectcount;
+	private CharSequence getPhoneNumber(Contact contact) {
+		if(contact.getPhoneNumbers() == null || contact.getPhoneNumbers().size() == 0) {
+			return null;
+		}
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for(String phNumber: contact.getPhoneNumbers()) {
+			builder.append(phNumber);
+			builder.append(", ");
+		}
+		// remove last ", " and convert to string
+		return builder.subSequence(0, builder.length() -2);
+	}
+
+	/**
+	 * Get all the contacts which are checked.
+	 * 
+	 * @return list of checked contacts
+	 */
+	public List<Contact> getCheckedContacts() {
+		List<Contact> checkedContacts = new LinkedList<Contact>();
+		
+		for(int i=0; i<contacts.size(); i++) {
+			if(!itemsUnChecked[i]) {
+				checkedContacts.add(contacts.get(i));
+			}
+		}
+		
+		return checkedContacts;
 	}
 
 }

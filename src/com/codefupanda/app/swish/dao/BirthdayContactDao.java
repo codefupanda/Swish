@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) Shashank Kulkarni - Shashank.physics AT gmail DOT com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package com.codefupanda.app.swish.dao;
 
 import java.text.DateFormat;
@@ -7,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,6 +32,11 @@ import android.provider.ContactsContract.CommonDataKinds;
 
 import com.codefupanda.app.swish.entity.Contact;
 
+/**
+ * Fetch Birthdays from the device.
+ *  
+ * @author Shashank
+ */
 public class BirthdayContactDao {
 	
 	private static final String YYYY_MM_DD = "yyyy-MM-dd";
@@ -26,6 +48,11 @@ public class BirthdayContactDao {
 		this.context = context;
 	}
 	
+	/**
+	 * Get contacts whose birthday is today.
+	 * 
+	 * @return list of contacts contacts whose birthday is today
+	 */
 	@SuppressLint("SimpleDateFormat")
 	public List<Contact> getTodaysBirthdayContacts() {
 		List<Contact> contacts = new ArrayList<Contact>();
@@ -58,17 +85,34 @@ public class BirthdayContactDao {
 					continue;
 				}
             	contact.setId(cursor.getString(idIndex));
-            	contact.setPhoneNumbers(getBirthday(cursor.getString(idIndex)));
+            	contact.setPhoneNumbers(getPhoneNumbers(cursor.getString(idIndex)));
             	contact.setName(cursor.getString(nameIndex));
+            	
+            	Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long
+                        .parseLong(cursor.getString(idIndex)));
+            	if(person != null) {
+            		Uri photoUri = Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+            		contact.setProfilePicUri(photoUri);
+            	}
+            	
             	contacts.add(contact);
 			} catch(Exception e) {
 				e.printStackTrace();
+			} finally {
+				cursor.close();
 			}
         }
         return contacts;
 	}
 	
-	private List<String> getBirthday(String contactId) {
+	/**
+	 * A helper method to retrieve phone numbers of contacts.
+	 * 
+	 * @param contactId whose phone number is required
+	 * 
+	 * @return list of phone numbers
+	 */
+	private List<String> getPhoneNumbers(String contactId) {
 		List<String> phoneNo = new ArrayList<String>();
 		
 		Cursor cursor = context.getContentResolver().query(
@@ -83,6 +127,11 @@ public class BirthdayContactDao {
 		return phoneNo;
 	}
 	
+	/**
+	 * Helper method to retrieve contacts.
+	 * 
+	 * @return cursor
+	 */
 	private Cursor getContactsBirthdays() {
 		Uri uri = ContactsContract.Data.CONTENT_URI;
 
