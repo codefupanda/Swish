@@ -98,10 +98,9 @@ public class BirthdayContactDao {
             	contacts.add(contact);
 			} catch(Exception e) {
 				e.printStackTrace();
-			} finally {
-				cursor.close();
-			}
+			} 
         }
+        cursor.close();
         return contacts;
 	}
 	

@@ -109,7 +109,7 @@ public class CustomAdapter extends BaseAdapter {
 			holder.profilePic = (ImageView) convertView
 					.findViewById(R.id.profile_pic);
 			holder.phoneNumber = (TextView) convertView
-					.findViewById(R.id.date_of_birth);
+					.findViewById(R.id.phone_number);
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.chk);
 			holder.profilePic.setImageResource(R.drawable.blank_profile_pic);
 			

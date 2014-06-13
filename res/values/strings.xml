@@ -17,7 +17,8 @@
     <string name="update">Update</string>
     <string name="welcome">Welcome to Swish!</string>
     <string name="gotoHelp">Check Menu -> Help for help.</string>
-    
+    <string name="noBdayToday">\tNo birthdays today.\nCome back tomorrow.</string>
+
     <string name="helpText">
      Swish relies on the contact information saved in the phone to notify you the Birthdays.\n
      \n

@@ -4,14 +4,14 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:padding="5dp"
     tools:context="com.codefupanda.app.swish.MainActivity"
-    android:focusableInTouchMode="true"
-    tools:ignore="MergeRootFrame">
+    tools:ignore="MergeRootFrame" >
 
     <!-- ListView Containt -->
-	
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -27,14 +27,24 @@
         android:layout_height="wrap_content"
         android:visibility="invisible" >
     </ListView>
-    
-     <Button
+
+    <Button
         android:id="@+id/swishButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:contentDescription="@string/swish"
-        android:visibility="invisible" 
-        android:text="@string/swish" />
+        android:text="@string/swish"
+        android:visibility="invisible" />
+    
+    <TextView android:id="@+id/noBdayToday"
+        android:padding="30dp"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:text="@string/noBdayToday"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/noBdayToday"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </RelativeLayout>

@@ -133,8 +133,12 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	private void showHomeScreen() {
 		findViewById(R.id.logo).setVisibility(View.INVISIBLE);
-		findViewById(R.id.swishButton).setVisibility(View.VISIBLE);
-		mylistview.setVisibility(View.VISIBLE);
+		if(contacts.size() > 0) {
+			findViewById(R.id.swishButton).setVisibility(View.VISIBLE);
+			mylistview.setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.noBdayToday).setVisibility(View.VISIBLE);
+		}
 	}
 	
 	/**

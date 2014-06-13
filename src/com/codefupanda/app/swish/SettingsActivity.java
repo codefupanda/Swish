@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.codefupanda.app.swish.constant.Constants;
 import com.codefupanda.app.swish.dao.Dao;
 import com.codefupanda.app.swish.exception.SwishException;
+import com.codefupanda.app.swish.util.AlarmUtil;
 
 /**
  * Activity for settings screen. 
@@ -74,6 +75,8 @@ public class SettingsActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View view) {
 				try {
+					AlarmUtil.CancelAlarm(getApplicationContext());
+					AlarmUtil.SetAlarm(getApplicationContext(), picker.getCurrentHour(), picker.getCurrentMinute());
 					dao.saveSmsText(getApplicationContext(), smsText.getText().toString());
 					dao.saveSendTime(getApplicationContext(), picker.getCurrentHour(), picker.getCurrentMinute());
 					
