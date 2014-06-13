@@ -102,6 +102,7 @@ public class MainActivity extends ActionBarActivity implements
 			@Override
 			public void onClick(View view) {
 				SMSUtil.sendSms(getApplicationContext(), customAdapter.getCheckedContacts(), dao.getSmsText(getApplicationContext()));
+				finish();
 			}
 		});
 	}

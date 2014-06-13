@@ -111,11 +111,12 @@ public class CustomAdapter extends BaseAdapter {
 			holder.phoneNumber = (TextView) convertView
 					.findViewById(R.id.phone_number);
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.chk);
-			holder.profilePic.setImageResource(R.drawable.blank_profile_pic);
 			
 			// In case contact have picture assigned to it
-			if(contact.getProfilePicUri() != null) {
-				holder.profilePic.setImageURI(contact.getProfilePicUri());
+			// if not use the defualt pic
+			holder.profilePic.setImageURI(contact.getProfilePicUri());			
+			if(holder.profilePic.getDrawable() == null) {
+				holder.profilePic.setImageResource(R.drawable.blank_profile_pic);
 			}
 			
 			holder.name.setText(contact.getName());
